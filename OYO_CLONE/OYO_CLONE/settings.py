@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'home'
+    'home',
+    'accounts'
 ]
 
 MIDDLEWARE = [
@@ -134,3 +135,15 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#FOR THIS WE ARE USING SMTP server
+#This settings to be included in settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = "bharathreddykalakoti@gmail.com"
+EMAIL_HOST_PASSWORD = "hqdx ryki fhbd xfxh"
+
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
