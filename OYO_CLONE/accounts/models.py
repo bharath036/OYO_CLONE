@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User 
-
+#if we import generateSlug here from utils.py we get circular error as in 
+#utils.py we are importing Hotel model
+#So we import in hotel class inside save function
+#from .utils import generateSlug
 # Create your models here.
 
 class HotelUser(User):
@@ -10,13 +13,21 @@ class HotelUser(User):
     otp = models.CharField(max_length=10,null=True,blank=True)
     #False means email not verified
     is_verified = models.BooleanField(default=False)
+    #otp = models.CharField(max_length=10,null=True,blank=True)
+    # 
+    class Meta:
+        db_table = "hotel_user" 
 
 class Hotelvendor(User):
     phone_number = models.CharField(max_length=10,unique=True)
+    business_name = models.CharField(max_length=100)
     profile_picture = models.ImageField(upload_to='profile')
     email_token = models.CharField(max_length=100,null = True,blank = True)
     otp = models.CharField(max_length=10,null=True,blank=True)
     is_verified = models.BooleanField(default=False)
+
+    class Meta:
+        db_table = "hotel_vendor" 
 
 #Now we are creating hotel model 
 
@@ -24,6 +35,9 @@ class Ameneties(models.Model):
     #amanetie names like AC,WIFI,SWIMMING POOL
     name = models.CharField(max_length=1000)
     icon = models.ImageField(upload_to="hotels")
+
+    def __str__(self):
+        return self.name
 
 class Hotel(models.Model):
     hotel_name = models.CharField(max_length=100)
@@ -35,7 +49,8 @@ class Hotel(models.Model):
     hotel_offer_price = models.FloatField()
     hotel_location = models.TextField()
     is_active = models.BooleanField(default=True)
-    
+
+
 
 class HotelImages(models.Model):
     hotel = models.ForeignKey(Hotel,on_delete=models.CASCADE,related_name="hotel_images")
