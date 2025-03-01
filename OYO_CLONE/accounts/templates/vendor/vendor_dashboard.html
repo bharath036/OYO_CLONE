@@ -2,28 +2,59 @@
 {% load static %}
 {% block start %}
 
+<style>
+    /* Ensure all cards have the same height */
+    .card {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Make card body expand to keep buttons at the bottom */
+    .card-body {
+        flex-grow: 1;
+    }
+
+    /* Set a fixed height for images to maintain uniformity */
+    .card img {
+        height: 200px;
+        object-fit: cover; /* Ensures images are cropped properly */
+    }
+
+    /* Ensure buttons are always aligned at the bottom */
+    .card-footer {
+        text-align: center;
+        margin-top: auto;
+    }
+</style>
+
 <div class="container mt-5 text-center">
     <div class="mx-auto col-6">
         <a href="{% url 'add_hotel' %}" class="btn btn-success">Add Hotels</a>
     </div>
-    <div class="row">
+
+    <div class="row mt-3">
         {% for hotel in hotels %}
-        <div class="row">
-            <div class="col-md-3">
-                <div class="card shadow-lg" style="width: 18rem;">
-                    <img src="/media/{{hotel.hotel_images.first.image}}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ hotel.hotel_name }}</h5>
-                        <p class="card-text">{{ hotel.hotel_description }}</p>
-                        {{hotel.ameneties.all}}
-                        {% for amenetie in hotel.ameneties.all %}
-                        <span class="badge text-bg-primary">{{ amenetie.name }}</span>
-                        {% endfor %}
-                    </div>
+        <div class="col-md-4 mb-4">
+            <div class="card shadow-lg">
+                <img src="/media/{{ hotel.hotel_images.first.image }}" class="card-img-top" alt="Hotel Image">
+                <div class="card-body">
+                    <h5 class="card-title">{{ hotel.hotel_name }}</h5>
+                    <p class="card-text">{{ hotel.hotel_description }}</p>
+                    
+                    <!-- Display amenities -->
+                    {% for amenetie in hotel.ameneties.all %}
+                    <span class="badge text-bg-primary">{{ amenetie.name }}</span>
+                    {% endfor %}
+                </div>
+
+                <!-- Button container for alignment -->
+                <div class="card-footer">
                     <a href="{% url 'upload_images' hotel.hotel_slug %}" class="btn btn-success">Image</a>
                     <a href="{% url 'edit_hotel' hotel.hotel_slug %}" class="btn btn-warning">Edit</a>
                 </div>
             </div>
+        </div>
         {% endfor %}
     </div>
 </div>

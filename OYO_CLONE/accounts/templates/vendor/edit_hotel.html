@@ -17,9 +17,11 @@
           </div>
 
           <div class="mb-3">
+            <label for="floatingTextarea">Hotel Description</label>
             <div class="form-floating">
-                <textarea name="hotel_description" class="form-control" placeholder="Leave a comment here" id="floatingTextarea">{{hotel.hotel_description}}</textarea>
-                <label for="floatingTextarea">Hotel Description</label>
+              
+                <textarea name="hotel_description" id = "flora" class="form-control" placeholder="Leave a comment here">{{hotel.hotel_description}}</textarea>
+               
               </div> 
 
               <div class="mb-3">
@@ -54,6 +56,12 @@
         </form>
   </div>
   </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+    var editor = new FroalaEditor('#flora');  
+    });
+    </script> 
 
 
 {% endblock %}

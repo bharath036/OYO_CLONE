@@ -343,3 +343,7 @@ def edit_hotel(request, slug):
     ameneties = Ameneties.objects.all()
     return render(request,'vendor/edit_hotel.html',context = {'hotel': hotel_obj,'ameneties': ameneties})
 
+def logout_view(request):
+    logout(request)
+    messages.success(request,'Logout success')
+    return redirect('/login')
