@@ -1,5 +1,5 @@
 from django.urls import path
-from accounts.views import login_page , register,verify_email_token,send_otp,verify_otp,login_vendor,register_vendor,dashboard,add_hotel
+from accounts.views import login_page , register,verify_email_token,send_otp,verify_otp,login_vendor,register_vendor,dashboard,add_hotel,upload_images,delete_image, edit_hotel
 
 urlpatterns = [
     path('login/',login_page,name="login_page"),
@@ -12,6 +12,9 @@ urlpatterns = [
     path('register-vendor/',register_vendor,name= 'register_vendor'),
     path('dashboard/',dashboard,name="dashboard"),
     path('add-hotel/',add_hotel,name="add_hotel"),
+    path('<slug>/upload-images/',upload_images,name="upload_images"),
+    path('delete_image/<id>/',delete_image,name="delete_image"),
+    path('edit-hotel/<slug>/',edit_hotel,name="edit_hotel"),
 
     path('verify-account/<token>/',verify_email_token,name="verify_email_token")
 ]
