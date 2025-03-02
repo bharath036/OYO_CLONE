@@ -2,53 +2,78 @@
 
 {% block start %}
 
+<style>
+  .card {
+    width: 18rem; 
+    height: 30rem; /* Fixed height for consistency */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .card img {
+    height: 200px;  /* Fixed height for images */
+    object-fit: cover; /* Ensures the image fills the space properly */
+  }
+
+  .card-body {
+    flex-grow: 1; /* Allows content to take up remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .hotel-details {
+    flex-grow: 1;
+  }
+
+  .btn-container {
+    text-align: center;
+  }
+</style>
+
 <div class="container mt-5 pt-5 pb-5">
-    <div class = "row">
-        <div class = "col-md-3">
-            <div class="card shadow-lg" style="width: 18rem;">
-                <img src="https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <span class="badge text-bg-primary">Swimmy Pool</span>
-                  <span class="badge text-bg-primary">WiFi</span>
-                </div>
+  <div class="col-6 mx-auto px-4">
+    <form class="d-flex gap-2">
+      <input type="text" name="search" class="form-control" placeholder="Search">
+      <select class="form-control" name="sort_by">
+        <option>Choose</option>
+        <option value="sort_low">Sort by Low to High</option>
+        <option value="sort_high">Sort by High to Low</option>
+      </select>
+      <button type="submit" class="btn btn-warning mt-1">Search</button>
+    </form>
+  </div>
+  
+  <div class="row">
+    {% for hotel in hotels %}
+      <div class="col-md-3 mt-3">
+        <div class="card shadow-lg">
+          <a href="{% url 'hotel_details' hotel.hotel_slug %}">
+            {% if hotel.hotel_images.first %}
+              <img src="/media/{{ hotel.hotel_images.first.image }}" class="card-img-top" alt="Hotel Image">
+            {% else %}
+              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" class="card-img-top" alt="Hotel Image">
+            {% endif %}
+            
+            <div class="card-body">
+              <h5 class="card-title">{{ hotel.hotel_name }}</h5>
+              <div class="hotel-details">
+                <p>Price <span class="badge text-bg-danger">{{ hotel.hotel_price }}</span></p>
+                <p>Offer Price <span class="badge text-bg-success">{{ hotel.hotel_offer_price }}</span></p>
+                <hr>
+                <p>{{ hotel.hotel_location }}</p> 
               </div>
-        </div>
-        <div class = "col-md-3">
-            <div class="card shadow-lg" style="width: 18rem;">
-                <img src="https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <span class="badge text-bg-primary">Swimmy Pool</span>
-                  <span class="badge text-bg-primary">WiFi</span>
-                </div>
+              <div class="btn-container">
+                <span class="badge text-bg-primary">Swimmy Pool</span>
+                <span class="badge text-bg-primary">WiFi</span>
               </div>
+            </div>
+          </a>
         </div>
-        <div class = "col-md-3">
-            <div class="card shadow-lg" style="width: 18rem;">
-                <img src="https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <span class="badge text-bg-primary">Swimmy Pool</span>
-                  <span class="badge text-bg-primary">WiFi</span>
-                </div>
-              </div>
-        </div>
-        <div class = "col-md-3">
-            <div class="card shadow-lg" style="width: 18rem;">
-                <img src="https://media.istockphoto.com/id/104731717/photo/luxury-resort.jpg?s=612x612&w=0&k=20&c=cODMSPbYyrn1FHake1xYz9M8r15iOfGz9Aosy9Db7mI=" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <span class="badge text-bg-primary">Swimmy Pool</span>
-                  <span class="badge text-bg-primary">WiFi</span>
-                </div>
-              </div>
-        </div>
-    </div>
+      </div>
+    {% endfor %}
+  </div>
 </div>
 
-{% endblock%}
+{% endblock %}

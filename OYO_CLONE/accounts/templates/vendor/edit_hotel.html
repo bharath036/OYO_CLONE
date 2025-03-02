@@ -7,6 +7,15 @@
 
   <div class="col-6 mx-auto card shadow p-4" style="border:none">
     <h2>Add Hotel</h2>
+
+    <ul class="list-group">
+      {% for booking in hotel.bookings.all %}
+
+          <li class="list-group-item">Start Date - {{booking.booking_start_date}} End Date - {{booking.booking_end_date}}</li>
+          
+       {% endfor %}
+  </ul>
+
       <form method="POST">
         {% include "utils/alerts.html" %}
         {% csrf_token %}

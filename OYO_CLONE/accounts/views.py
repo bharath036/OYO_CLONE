@@ -84,7 +84,7 @@ def login_page(request):
         if hotel_user:
             messages.success(request , 'Login successful')
             login(request,hotel_user)
-            return redirect('/login')
+            return redirect('/')
         
         messages.success(request , 'Invalid credentials')
         return redirect('/login')
