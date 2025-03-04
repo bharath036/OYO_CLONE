@@ -33,7 +33,7 @@ class Hotelvendor(User):
 
 class Ameneties(models.Model):
     #amanetie names like AC,WIFI,SWIMMING POOL
-    name = models.CharField(max_length=1000)
+    name = models.CharField(max_length=191)
     icon = models.ImageField(upload_to="hotels")
 
     def __str__(self):
@@ -42,7 +42,7 @@ class Ameneties(models.Model):
 class Hotel(models.Model):
     hotel_name = models.CharField(max_length=100)
     hotel_description = models.TextField()
-    hotel_slug = models.SlugField(max_length=1000,unique=True)
+    hotel_slug = models.SlugField(max_length=191,unique=True)
     hotel_owner = models.ForeignKey(Hotelvendor,on_delete=models.CASCADE,related_name="hotels")
     ameneties = models.ManyToManyField(Ameneties)
     hotel_price = models.FloatField()
