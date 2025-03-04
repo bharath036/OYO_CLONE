@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'debug_toolbar',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -49,9 +50,16 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
 ]
 
 ROOT_URLCONF = 'OYO_CLONE.urls'
+
+INTERNAL_IPS = [
+    #..............
+    "127.0.0.1",
+    #...............
+]
 
 TEMPLATES = [
     {
@@ -83,16 +91,32 @@ DATABASES = {
     }
 }
 '''
+from dotenv import load_dotenv
+import os 
+
+env = load_dotenv()
+
 
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.mysql',
-		'NAME': 'oyo_clone',
-		'USER': 'root',
+		'NAME': os.getenv('NAME'),
+		'USER': os.getenv('USER'),
 		'PASSWORD': 'bharath006',
 		'HOST':'127.0.0.1',
 		'PORT':'3306',
 	}
+}
+
+#CACHE layer
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
 }
 
 # Password validation
